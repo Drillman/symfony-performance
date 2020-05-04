@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Table(name="user")
+ * @ORM\Table(name="user_accounts")
  * @UniqueEntity(
  * fields="email",
  * message="Cet Email est deja utilisé"
@@ -105,7 +105,7 @@ class User implements UserInterface, \Serializable
     {
         $this->resetToken = $resetToken;
     }
-    
+
 
 
     public function __toString()
