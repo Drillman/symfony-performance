@@ -18,7 +18,7 @@ install: .env.local up
 	chmod +x bin/console
 	docker-compose run composer install --ignore-platform-reqs --no-scripts
 	docker-compose exec web bash -c "bin/console doctrine:schema:update --force"
-	docker-compose exec web bash -c "bin/console doctrine:migrations:migrate --no-interaction"
+# 	docker-compose exec web bash -c "bin/console doctrine:migrations:migrate --no-interaction"
 
 install-dev: install fixtures ## Make install with developer fixtures
 
