@@ -42,12 +42,19 @@ class TrickController extends AbstractController
     {
         $tricks = $trickRepository->findAll();
 
+        // somehow create a Response object, like by rendering a template
+        $response = $this->render('trick/index.html.twig', [
+            'tricks' => $tricks,
+              'fixed_menu'=> 'enabled'
+          ]);
 
-        return $this->render('trick/index.html.twig', [
-          'tricks' => $tricks,
-            'fixed_menu'=> 'enabled'
+        // cache for 3600 seconds
+        $response->setSharedMaxAge(3600);
 
-        ]);
+        // (optional) set a custom Cache-Control directive
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        
+        return $response;
     }
 
     /**
