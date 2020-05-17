@@ -14,11 +14,8 @@ help:
 
 start: .env.local up info ## Start development environment
 
-install: .env.local up
-	chmod +x bin/console
-	docker-compose run composer install --ignore-platform-reqs --no-scripts
-	docker-compose exec web bash -c "bin/console doctrine:schema:update --force"
-# 	docker-compose exec web bash -c "bin/console doctrine:migrations:migrate --no-interaction"
+install: .env.local
+	docker-compose run composer install
 
 install-dev: install fixtures ## Make install with developer fixtures
 
@@ -42,7 +39,8 @@ down: ## Stop and remove containers
 fixtures: ## Launch fixtures
 	docker-compose exec web bash -c "php bin/console doctrine:fixture:load -n"
 
-
+schema:
+	docker-compose exec web bin/console d:s:u --force
 ##
 ## Tools
 ## -----

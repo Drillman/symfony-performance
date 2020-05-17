@@ -1,2 +1,2 @@
-echo "GET http://localhost:8082/" | vegeta attack -name=homepage -rate=3 -duration=5s > ./vegeta/results/results.homepage.bin
-cat ./vegeta/results/results.homepage.bin | vegeta plot > ./vegeta/results/plot.homepage.html
+echo "GET http://localhost:8082/" | vegeta attack -name=homepage -rate=3 -duration=5s > ./vegeta/results/results.homepage4.bin
+cat ./vegeta/results/results.homepage4.bin | vegeta plot > ./vegeta/results/plot.homepage4.html

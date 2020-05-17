@@ -1,0 +1,2 @@
+echo "GET http://localhost:8082/register" | vegeta attack -name=register -rate=3 -duration=5s > ./vegeta/results/results.register3.bin
+cat ./vegeta/results/results.register3.bin | vegeta plot > ./vegeta/results/plot.register3.html
