@@ -18,6 +18,9 @@ doctrine:
         url: '%env(resolve:DATABASE_URL)%'
         unix_socket: '%env(resolve:UNIX_SOCKET)%'
     orm:
+        metadata_cache_driver: apcu
+        query_cache_driver: apcu
+        result_cache_driver: apcu 
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
