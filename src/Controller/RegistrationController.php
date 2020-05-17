@@ -51,7 +51,14 @@ class RegistrationController extends AbstractController
             $this->addFlash('success', 'Votre compte à bien été enregistré.');
             return $this->redirectToRoute('login');
         }
-        return $this->render('registration/register.html.twig', ['form' => $form->createView(), 'mainNavRegistration' => true, 'title' => 'Inscription']);
+        $response = $this->render('registration/register.html.twig', ['form' => $form->createView(), 'mainNavRegistration' => true, 'title' => 'Inscription']);
+        // cache for 3600 seconds
+        $response->setSharedMaxAge(3600);
+
+        // (optional) set a custom Cache-Control directive
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+
+        return $response;
     }
 
     /**
@@ -98,12 +105,12 @@ class RegistrationController extends AbstractController
                     "Cliquez sur ce lien pour redéfinir un nouveau mot de passe : " . $url,
                     'text/html'
                 );
- 
+
             $mailer->send($message);
 
- 
+
             $this->addFlash('notice', 'Mail envoyé');
- 
+
             return $this->redirectToRoute('trick_index');
         }
         return $this->render('security/forgotten_password.html.twig', array('form' => $form->createView(), 'title' => 'Recupérer mot de passe'));
@@ -121,17 +128,17 @@ class RegistrationController extends AbstractController
             if ($user !== null) {
                 $form = $this->createForm(ResetPasswordType::class, $user);
                 $form->handleRequest($request);
-      
+
                 if ($form->isSubmitted() && $form->isValid()) {
                     $encoded = $encoder->encodePassword($user, $user->getPlainPassword());
                     $user->setPassword($encoded);
                     $entityManager->persist($user);
                     $entityManager->flush();
-           
+
                     $this->addFlash('notice', 'Mot de passe mis à jour');
                     return $this->redirectToRoute('login');
                 }
-           
+
                 return $this->render('security/reset_password.html.twig', array('form' => $form->createView()));
             }
         }

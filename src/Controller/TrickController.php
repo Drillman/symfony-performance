@@ -38,14 +38,11 @@ class TrickController extends AbstractController
      * Action : get home page
      * @Route("/", name="trick_index", methods={"GET"})
      */
-    public function index(TrickRepository $trickRepository): Response
+    public function index(): Response
     {
-        $tricks = $trickRepository->findAll();
-
         // somehow create a Response object, like by rendering a template
         $response = $this->render('trick/index.html.twig', [
-            'tricks' => $tricks,
-              'fixed_menu'=> 'enabled'
+            'fixed_menu'=> 'enabled'
           ]);
 
         // cache for 3600 seconds
@@ -53,7 +50,7 @@ class TrickController extends AbstractController
 
         // (optional) set a custom Cache-Control directive
         $response->headers->addCacheControlDirective('must-revalidate', true);
-        
+
         return $response;
     }
 
@@ -141,7 +138,7 @@ class TrickController extends AbstractController
         $trick->setImgDocs($temporaryStorage->getTempImg());
         $trick->setVideoDocs($temporaryStorage->getTempVideo());
 
-    
+
         $form = $this->createForm(TrickType::class, $trick);
 
         if ($request->isMethod('post')) {
@@ -151,7 +148,7 @@ class TrickController extends AbstractController
 
         $form->handleRequest($request);
 
-       
+
         if ($form->isSubmitted() && $form->isValid()) {
             $trick =  $this->validateEdition($form, $trick, 'imgDocs', $storedImages);
             $trick = $this->validateEdition($form, $trick, 'videoDocs', $storedVideos);
@@ -216,15 +213,15 @@ class TrickController extends AbstractController
             return $this->render('trick/comments.html.twig', [
 
         'comments' => $commentRepo->findComments($trick->getId(), $request->request->get('first'))
-            
+
         ]);
         }
- 
+
         return $this->render('trick/comments.html.twig', [
 
         'comments' => $commentRepo->findComments($trick->getId()),
         'initial_load' => true
-            
+
         ]);
     }
     /**
