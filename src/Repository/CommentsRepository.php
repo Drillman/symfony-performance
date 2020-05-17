@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Comments|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class CommentsRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Comment::class);
     }
